@@ -1,0 +1,19 @@
+
+
+
+source ~/.bashrc
+
+umask 022
+
+LFS=/mnt/lfs
+PART_ROOT="lfs_root"
+PART_SWAP="lfs_swap"
+
+function inValidMode
+{
+	if [[ -z "$2" ]] || [[ " $1 " =~ " $2 " ]]
+	then
+		echo "Found valid mode '$2'"
+	fi
+}
+
