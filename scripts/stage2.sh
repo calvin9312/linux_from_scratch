@@ -3,10 +3,12 @@
 MODE="$1"
 
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
+SCRIPT_TMP_DIR="/tmp/linux_from_scratch"
 
-cp -rf ../../
+rm -rf $SCRIPT_TMP_DIR
+cp -rf $SCRIPT_DIR/../ $SCRIPT_TMP_DIR
 
-source $SCRIPT_DIR/lfs_common.shrc
+source $SCRIPT_TMP_DIR/scripts/lfs_common.shrc
 
 if [[ -n $MODE ]] && [[ -n "$(inValidMode "clean" "$MODE")" ]]
 then
@@ -18,10 +20,26 @@ fi
 
 if [[ -n "$(inValidMode "binutils" "$MODE")" ]]
 then
-	SCRIPT=build_binutils.sh
-	cp $SCRIPT_DIR/scripts/temporary_tools/$SCRIPT /tmp/$SCRIPT
-	chown -R lfs:lfs /tmp/$SCRIPT
-	sudo su lfs -c "/tmp/$SCRIPT"
-	rm -fr /tmp/$SCRIPT
+	sudo su lfs -c "$SCRIPT_TMP_DIR/scripts/build_temporary_tools/build_binutils.sh"
+fi
+
+if [[ -n "$(inValidMode "gcc" "$MODE")" ]]
+then
+	sudo su lfs -c "$SCRIPT_TMP_DIR/scripts/build_temporary_tools/build_gcc.sh"
+fi
+
+if [[ -n "$(inValidMode "linux_headers" "$MODE")" ]]
+then
+	sudo su lfs -c "$SCRIPT_TMP_DIR/scripts/build_temporary_tools/build_linux_headers.sh"
+fi
+
+if [[ -n "$(inValidMode "glibc" "$MODE")" ]]
+then
+	sudo su lfs -c "$SCRIPT_TMP_DIR/scripts/build_temporary_tools/build_glibc.sh"
+fi
+
+if [[ -n "$(inValidMode "libstdc++" "$MODE")" ]]
+then
+	sudo su lfs -c "$SCRIPT_TMP_DIR/scripts/build_temporary_tools/build_libstdc++.sh"
 fi
 

@@ -3,8 +3,13 @@
 MODE="$1"
 
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
+SCRIPT_TMP_DIR="/tmp/linux_from_scratch"
 
-source $SCRIPT_DIR/lfs_common.shrc
+rm -rf $SCRIPT_TMP_DIR
+cp -rf $SCRIPT_DIR/../ $SCRIPT_TMP_DIR
+
+source $SCRIPT_TMP_DIR/scripts/lfs_common.shrc
+
 
 
 ########################################################
@@ -13,7 +18,7 @@ source $SCRIPT_DIR/lfs_common.shrc
 cp $SCRIPT_DIR/lfs_common.shrc /tmp/
 chmod a+rx /tmp/lfs_common.shrc
 sed -i "/lfs_common/d" /root/.bashrc
-echo "source /tmp/lfs_common.shrc" >> /root/.bashrc
+echo "source /tmp/linux_from_scratch/scripts/lfs_common.shrc" >> /root/.bashrc
 
 # clean up files
 
@@ -99,16 +104,16 @@ then
 EOF
 
 	cat > /home/lfs/.bashrc << "EOF"
-	source /tmp/lfs_common.shrc
-	set +h
-	LC_ALL=POSIX
-	LFS_TGT=$(uname -m)-lfs-linux-gnu
-	PATH=/usr/bin
-	if [ ! -L /bin ]; then PATH=/bin:$PATH; fi
-	PATH=$LFS/tools/bin:$PATH
-	CONFIG_SITE=$LFS/usr/share/config.site
-	MAKEFLAGS=-j$(nproc)
-	export LFS LC_ALL LFS_TGT PATH CONFIG_SITE MAKEFLAGS
+source /tmp/linux_from_scratch/scripts/lfs_common.shrc
+set +h
+LC_ALL=POSIX
+LFS_TGT=$(uname -m)-lfs-linux-gnu
+PATH=/usr/bin
+if [ ! -L /bin ]; then PATH=/bin:$PATH; fi
+PATH=$LFS/tools/bin:$PATH
+CONFIG_SITE=$LFS/usr/share/config.site
+MAKEFLAGS=-j$(nproc)
+export LFS LC_ALL LFS_TGT PATH CONFIG_SITE MAKEFLAGS
 EOF
 
 fi
