@@ -4,7 +4,7 @@ MODE="$1"
 
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 SCRIPT_TMP_DIR="/tmp/linux_from_scratch"
-BOOTSTRAP_SCRIPT_DIR="$SCRIPT_TMP_DIR/scripts/build_bootstrap_tools"
+BOOTSTRAP_SCRIPT_DIR="$SCRIPT_TMP_DIR/scripts/build_pre_chroot_bootstrap_tools"
 
 rm -rf $SCRIPT_TMP_DIR
 cp -rf $SCRIPT_DIR/../ $SCRIPT_TMP_DIR
