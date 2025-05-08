@@ -4,8 +4,9 @@ source ~/.bashrc
 
 cd $LFS/sources
 
-tar -xvf binutils-2.44.tar.xz
-cd binutils-2.44
+PKG_DIR="binutils-2.44"
+tar -xvf ${PKG_DIR}.tar.xz
+cd ${PKG_DIR}
 
 mkdir -v build
 cd build
@@ -23,4 +24,4 @@ make
 make install
 
 cd $LFS/sources
-rm -rf binutils-2.44
+rm -rf ${PKG_DIR}

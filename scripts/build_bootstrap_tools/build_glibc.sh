@@ -4,8 +4,9 @@ source ~/.bashrc
 
 cd $LFS/sources
 
-tar -xvf glibc-2.41.tar.xz
-cd glibc-2.41
+PKG_DIR="glibc-2.41"
+tar -xvf ${PKG_DIR}.tar.xz
+cd ${PKG_DIR}
 
 case $(uname -m) in
 i?86)
@@ -40,5 +41,5 @@ sed '/RTLDLIST=/s@/usr@@g' -i $LFS/usr/bin/ldd
 echo "There should be a manual check here"
 
 cd $LFS/sources
-rm -rf glibc-2.41
+rm -rf ${PKG_DIR}
 

@@ -4,8 +4,9 @@ source ~/.bashrc
 
 cd $LFS/sources
 
-tar -xvf gcc-14.2.0.tar.xz
-cd gcc-14.2.0
+PKG_DIR="gcc-14.2.0"
+tar -xvf ${PKG_DIR}.tar.xz
+cd ${PKG_DIR}
 
 
 mkdir -v build
@@ -27,5 +28,5 @@ make DESTDIR=$LFS install
 rm -v $LFS/usr/lib/lib{stdc++{,exp,fs},supc++}.la
 
 cd $LFS/sources
-rm -rf gcc-14.2.0
+rm -rf ${PKG_DIR}
 
