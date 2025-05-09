@@ -2,20 +2,20 @@
 
 MODE="$1"
 
-SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
-SCRIPT_TMP_DIR="/tmp/linux_from_scratch"
+SCRIPT_ORIG_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
+SCRIPT_DIR="/tmp/linux_from_scratch"
 
-rm -rf $SCRIPT_TMP_DIR
-cp -rf $SCRIPT_DIR/../ $SCRIPT_TMP_DIR
+rm -rf $SCRIPT_DIR
+cp -rf $SCRIPT_ORIG_DIR/../ $SCRIPT_DIR
 
-source $SCRIPT_TMP_DIR/scripts/lfs_common.shrc
+source $SCRIPT_DIR/scripts/lfs_common.shrc
 
 
 
 ########################################################
 #### Stage 1
 
-cp $SCRIPT_DIR/lfs_common.shrc /tmp/
+cp $SCRIPT_DIR/scripts/lfs_common.shrc /tmp/
 chmod a+rx /tmp/lfs_common.shrc
 sed -i "/lfs_common/d" /root/.bashrc
 echo "source /tmp/linux_from_scratch/scripts/lfs_common.shrc" >> /root/.bashrc

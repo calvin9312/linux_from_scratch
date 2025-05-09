@@ -2,14 +2,14 @@
 
 MODE="$1"
 
-SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
-SCRIPT_TMP_DIR="/tmp/linux_from_scratch"
-BOOTSTRAP_SCRIPT_DIR="$SCRIPT_TMP_DIR/scripts/build_pre_chroot_bootstrap_tools"
+SCRIPT_ORIG_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
+SCRIPT_DIR="/tmp/linux_from_scratch"
+BOOTSTRAP_SCRIPT_DIR="$SCRIPT_DIR/scripts/build_pre_chroot_bootstrap_tools"
 
-rm -rf $SCRIPT_TMP_DIR
-cp -rf $SCRIPT_DIR/../ $SCRIPT_TMP_DIR
+rm -rf $SCRIPT_DIR
+cp -rf $SCRIPT_ORIG_DIR/../ $SCRIPT_DIR
 
-source $SCRIPT_TMP_DIR/scripts/lfs_common.shrc
+source $SCRIPT_DIR/scripts/lfs_common.shrc
 
 if [[ -n "$(inValidMode "binutils_pass1" "$MODE")" ]] ; then sudo su lfs -c "$BOOTSTRAP_SCRIPT_DIR/build_binutils_pass1.sh" ; fi
 
