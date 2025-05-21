@@ -53,5 +53,5 @@ fi
 
 unset NO_LOG
 
-#source $LFS_REPO_DIR/scripts/lfs_common.shrc
+source $LFS_REPO_DIR/scripts/lfs_common.shrc
 
