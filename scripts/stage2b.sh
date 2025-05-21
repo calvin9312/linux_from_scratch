@@ -1,5 +1,7 @@
 #/bin/bash
 
+$(dirname $(readlink -e ${BASH_SOURCE[0]}))/setup.shrc $(basename ${BASH_SOURCE[0]}) N $@
+
 mkdir -pv /{boot,home,mnt,opt,srv}
 
 mkdir -pv /etc/{opt,sysconfig}
@@ -76,4 +78,11 @@ chmod -v 600 /var/log/btmp
 
 
 ./build_post_chroot_bootstrap_tools.sh
+
+
+rm -rf /usr/share/{info,man,doc}/*
+find /usr/{lib,libexec} -name \*.la -delete
+rm -rf /tools
+
+exit
 

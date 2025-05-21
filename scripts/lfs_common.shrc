@@ -5,9 +5,9 @@
 
 umask 022
 
-LFS=/mnt/lfs
-PART_ROOT="lfs_root"
-PART_SWAP="lfs_swap"
+export LFS=/mnt/lfs
+export PART_ROOT="lfs_root"
+export PART_SWAP="lfs_swap"
 
 function inValidMode
 {

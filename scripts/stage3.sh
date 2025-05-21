@@ -2,6 +2,13 @@
 
 $(dirname $(readlink -e ${BASH_SOURCE[0]}))/setup.shrc $(basename ${BASH_SOURCE[0]}) N $@
 
-./build_pre_chroot_bootstrap_tools.sh
+./build_final_tools.sh $1
 
-./pre_chroot_mount.sh
+
+
+
+
+
+
+
+

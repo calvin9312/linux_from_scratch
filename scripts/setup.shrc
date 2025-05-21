@@ -1,0 +1,57 @@
+
+SCRIPT_NAME="$1"
+USE_USER_LFS="$2"
+MODE="$3"
+
+#echo args : $@
+
+LFS_REPO_DIR="/tmp/linux_from_scratch"
+SCRIPT_PATH="$LFS_REPO_DIR/scripts/$SCRIPT_NAME"
+if [[ "$NO_LOG" == "Y" ]] 
+then 
+	if [[ "$USE_USER_LFS" == "N" ]] && [[ "$(whoami)" != "root" ]]
+	then
+		echo "This script needs to be run as root"	
+		exit
+	elif [[ "$USE_USER_LFS" == "Y" ]] && [[ "$(whoami)" != "lfs" ]]
+	then
+		echo "This script needs to be run as root"	
+		exit
+	fi
+else
+	SCRIPT_BASE_NAME="$(basename $SCRIPT_NAME .sh)"
+	if [[ "$(whoami)" != "root" ]]
+	then
+		echo "This script needs to be run as root"	
+		exit
+	fi
+
+	LOGS_BASE_DIR="/tmp/lfs_logs"
+	LOGS_DIR="$LOGS_BASE_DIR/$SCRIPT_BASE_NAME"
+	mkdir -p $LOGS_DIR
+	chmod -R a+rw $LOGS_BASE_DIR
+	TIMESTAMP="$(date +"%Y-%m-%d_%H-%M-%S")"
+	export NO_LOG=Y
+
+	LFS_REPO_ORIG_DIR=$(dirname $(dirname $(readlink -e ${BASH_SOURCE[0]})))
+
+	rm -rf $LFS_REPO_DIR
+	cp -rf $LFS_REPO_ORIG_DIR $LFS_REPO_DIR
+	chmod a+r -R $LFS_REPO_DIR
+
+	source $LFS_REPO_DIR/scripts/lfs_common.shrc
+
+	export NO_LOG=Y
+	if [[ "$USE_USER_LFS" == "Y" ]] 
+	then 
+		su lfs -c "$SCRIPT_PATH $MODE" | tee -a $LOGS_DIR/stage1_${TIMESTAMP}.log
+	else
+		$SCRIPT_PATH $MODE | tee $LOGS_DIR/stage1_${TIMESTAMP}.log
+	fi
+	exit
+fi
+
+unset NO_LOG
+
+#source $LFS_REPO_DIR/scripts/lfs_common.shrc
+
