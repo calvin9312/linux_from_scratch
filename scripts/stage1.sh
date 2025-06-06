@@ -38,9 +38,9 @@ then
 fi
 
 
-# building packages
+# download packages
 
-if [[ -n "$(inValidMode "build_packages" "$MODE")" ]]
+if [[ -n "$(inValidMode "download_packages" "$MODE")" ]]
 then
 	mkdir -v $LFS/sources
 	chmod -v a+wt $LFS/sources
