@@ -44,9 +44,9 @@ else
 	export NO_LOG=Y
 	if [[ "$USE_USER_LFS" == "Y" ]] 
 	then 
-		su lfs -c "$SCRIPT_PATH $MODE" | tee -a $LOGS_DIR/stage1_${TIMESTAMP}.log
+		su lfs -c "$SCRIPT_PATH $MODE" &2>1 | tee -a $LOGS_DIR/stage1_${TIMESTAMP}.log
 	else
-		$SCRIPT_PATH $MODE | tee $LOGS_DIR/stage1_${TIMESTAMP}.log
+		$SCRIPT_PATH $MODE &2>1 | tee $LOGS_DIR/stage1_${TIMESTAMP}.log
 	fi
 	exit
 fi
