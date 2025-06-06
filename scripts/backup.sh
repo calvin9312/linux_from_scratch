@@ -5,7 +5,14 @@ NAME=$2
 
 LFS="/mnt/lfs"
 
-TAR_PATH="$HOME/lfs-temp-tools-12.3.${NAME}.tar"
+TAR_DIR="$HOME/lfs_backups"
+TAR_PATH="$TAR_DIR/lfs-temp-tools-12.3.${NAME}.tar"
+
+if [[ "$(whoami)" != "root" ]]
+then
+	echo "This script needs to be run as root"	
+	exit
+fi
 
 if [[ ! -e $LFS ]]
 then
@@ -13,9 +20,9 @@ then
 	exit
 fi
 
-if [[ -n "$(inValidMode "backup" "$MODE")" ]]
+if [[ "$MODE" == "backup" ]]
 then
-
+	mkdir -p $TAR_DIR
 	mountpoint -q $LFS/dev/shm && umount $LFS/dev/shm
 	umount $LFS/dev/pts
 	umount $LFS/{sys,proc,run,dev}
@@ -25,7 +32,7 @@ then
 	exit
 fi
 
-if [[ -n "$(inValidMode "restore" "$MODE")" ]]
+if [[ "$MODE" == "restore" ]]
 then
 	./stage1.sh clean
 	./stage1.sh make_partitions
