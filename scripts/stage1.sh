@@ -1,9 +1,12 @@
 #/bin/bash
 
+
 source $(dirname $(readlink -e ${BASH_SOURCE[0]}))/setup.shrc $(basename ${BASH_SOURCE[0]}) N $@
+
 
 sed -i "/lfs_common/d" /root/.bashrc
 echo "source /tmp/linux_from_scratch/scripts/lfs_common.shrc" >> /root/.bashrc
+
 
 # clean up files
 
@@ -15,8 +18,8 @@ then
 	exit
 fi
 
-
 # make partitions
+
 
 if [[ -n "$(inValidMode "make_partitions" "$MODE")" ]]
 then
